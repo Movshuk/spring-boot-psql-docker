@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  #-----------------------DATABASE
+  person-psql:
+    image: postgres
+    container_name: person-psql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=myDb
+    volumes:
+      - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh
+    ports:
+      - '5434:5432'
+    restart: always
+  #-----------------------SPRING-APP
+#  person-app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: personApp
+#    container_name: person-contatiner
+#    ports:
+#      - '8082:8080'
+#    depends_on:
+#      - person-psql
+#    environment:
+
+  #------------------------DEAL-APP-----------------------------------
+  person-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: person-app
+    container_name: person-app
+    ports:
+      - '8082:8080'
+    depends_on:
+      - person-psql
