@@ -15,5 +15,6 @@
 * PostgreSQL 12.2
 
 ## How to run:
+    mvn clean package
     sudo docker-compose up --build
     
